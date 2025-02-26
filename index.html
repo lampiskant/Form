@@ -13,28 +13,28 @@
     </form>
 
     <script>
-        document.getElementById("userForm").addEventListener("submit", async function(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
+       const form = document.getElementById("myForm");
 
-            const response = await fetch("https://lislaaulzcxrfybfriqj.supabase.co", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxpc2xhYXVsemN4cmZ5YmZyaXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA2MDgwNDMsImV4cCI6MjA1NjE4NDA0M30.vd7nX88jly3j97IOqNUaH36RTbYxBo-e1en6H_lT_kQ",
-                    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxpc2xhYXVsemN4cmZ5YmZyaXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA2MDgwNDMsImV4cCI6MjA1NjE4NDA0M30.vd7nX88jly3j97IOqNUaH36RTbYxBo-e1en6H_lT_kQ"
-                },
-                body: JSON.stringify({ name, email })
-            });
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-            if (response.ok) {
-                alert("Επιτυχής καταχώρηση!");
-            } else {
-                alert("Σφάλμα!");
-            }
-        });
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);  // Ανάγνωση των δεδομένων από τη φόρμα
+
+    const response = await fetch("https://lislaaulzcxrfybfriqj.supabase.co/rest/v1/users", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxpc2xhYXVsemN4cmZ5YmZyaXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA2MDgwNDMsImV4cCI6MjA1NjE4NDA0M30.vd7nX88jly3j97IOqNUaH36RTbYxBo-e1en6H_lT_kQ", // Your anon-key
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxpc2xhYXVsemN4cmZ5YmZyaXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA2MDgwNDMsImV4cCI6MjA1NjE4NDA0M30.vd7nX88jly3j97IOqNUaH36RTbYxBo-e1en6H_lT_kQ", // Your anon-key (again for Authorization)
+        },
+        body: JSON.stringify(data),
+        mode: "no-cors"  // Add no-cors mode to bypass CORS issues
+    });
+
+    console.log(response); // Για να δεις την απόκριση από το Supabase
+});
+
     </script>
 </body>
 </html>
